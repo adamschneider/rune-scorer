@@ -18,7 +18,7 @@
 
 .stats {
   display: grid;
-  grid-template-columns: 2fr repeat(22, 1fr);
+  grid-template-columns: 3fr repeat(30, 1fr);
   gap: 1px;
 }
 

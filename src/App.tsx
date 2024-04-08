@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
 /*
@@ -19,7 +19,8 @@ import './App.css';
   +-------+-----------------+-----------+-----------+
 */
 
-const numberOfColumns = 23;
+const numberOfColumns = 33;
+const labelColumns = 3;
 
 class Stat {
   constructor(
@@ -44,14 +45,14 @@ function StatRow({ stat, selected, onSelect, classes }: { stat: Stat, selected: 
   }
 
   let rolls = new Set<number>();
-  singleRoll.map(i => singleRoll.map(j => singleRoll.map(k => rolls.add(i + j + k))));
+  singleRoll.map(h => singleRoll.map(i => singleRoll.map(j => singleRoll.map(k => rolls.add(h + i + j + k)))));
 
 
   let elements: JSX.Element[] = [];
   rolls.forEach((_, r) => elements.push(<span className={r === selected ? `${classes} btn selected` : `btn ${classes}`} onClick={() => onSelect(r)}>{r}</span>));
 
   let spaces: JSX.Element[] = [];
-  for (let i = 0; i < numberOfColumns - rolls.size - 1; i++) {
+  for (let i = 0; i < numberOfColumns - rolls.size - labelColumns; i++) {
     spaces.push(<span className={classes}></span>);
   }
 
