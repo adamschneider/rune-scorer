@@ -19,8 +19,7 @@ import './App.css';
   +-------+-----------------+-----------+-----------+
 */
 
-const numberOfColumns = 33;
-const labelColumns = 3;
+const numberOfColumns = 30;
 
 class Stat {
   constructor(
@@ -33,7 +32,7 @@ class Stat {
 }
 
 function RuneType({ stat, selected, onClick }: { stat: Stat, selected: boolean, onClick: () => void }) {
-  let className = selected ? 'btn selected' : 'btn';
+  let className = selected ? 'rune-type btn selected' : 'rune-type btn';
   return <span className={className} onClick={onClick}>{stat.name}</span>;
 }
 
@@ -52,16 +51,16 @@ function StatRow({ stat, selected, onSelect, classes }: { stat: Stat, selected: 
   rolls.forEach((_, r) => elements.push(<span className={r === selected ? `${classes} btn selected` : `btn ${classes}`} onClick={() => onSelect(r)}>{r}</span>));
 
   let spaces: JSX.Element[] = [];
-  for (let i = 0; i < numberOfColumns - rolls.size - labelColumns; i++) {
-    spaces.push(<span className={classes}></span>);
+  if (rolls.size < numberOfColumns) {
+    spaces.push(<span className={`${classes} filler`}></span>);
   }
 
   return (
-    <>
-      <span className={classes}>{stat.name}</span>
+    <div className="stat-row">
+      <span className={`label ${classes}`}>{stat.name}</span>
       {elements}
       {spaces}
-    </>
+    </div>
   )
 }
 
@@ -109,27 +108,26 @@ function App() {
 
   return (
     <div className="main">
-      <div className="header">
-        <span>Score</span><span>{score}</span><span className="btn" onClick={clear}>Clear</span>
+      <div className="score-row">
+        <span>Score</span><span className="score">{score}</span><span className="btn" onClick={clear}>Clear</span>
       </div>
-      <div className="rune-types">
-        <span>Rune Type</span>
-        <span className={selectedRune === undefined ? 'btn selected' : 'btn'} onClick={() => { selectRune(undefined); }}>Flat</span>
+      <div className="rune-type-row">
+        <span className="label">Rune Type</span>
+        <span className={selectedRune === undefined ? 'rune-type btn selected' : 'rune-type btn'} onClick={() => { selectRune(undefined); }}>Flat</span>
         {
           Object.values(stats).map(stat =>
             <RuneType stat={stat} selected={selectedRune === stat} onClick={() => selectRune(stat)} />
           )
         }
       </div>
-      <div className="stats">
-        <StatRow stat={stats.hp} classes="odd" selected={selectedHp} onSelect={(hp: number) => selectHp(hp)} />
-        <StatRow stat={stats.atk} classes="even" selected={selectedAtk} onSelect={(atk: number) => selectAtk(atk)} />
-        <StatRow stat={stats.def} classes="odd" selected={selectedDef} onSelect={(def: number) => selectDef(def)} />
-        <StatRow stat={stats.spd} classes="even" selected={selectedSpd} onSelect={(spd: number) => selectSpd(spd)} />
-        <StatRow stat={stats.criRate} classes="odd" selected={selectedCriRate} onSelect={(criRate: number) => selectCriRate(criRate)} />
-        <StatRow stat={stats.criDmg} classes="even" selected={selectedCriDmg} onSelect={(criDmg: number) => selectCriDmg(criDmg)} />
-        <StatRow stat={stats.acc} classes="odd" selected={selectedAcc} onSelect={(acc: number) => selectAcc(acc)} />
-      </div>
+
+      <StatRow stat={stats.hp} classes="odd" selected={selectedHp} onSelect={(hp: number) => selectHp(hp)} />
+      <StatRow stat={stats.atk} classes="even" selected={selectedAtk} onSelect={(atk: number) => selectAtk(atk)} />
+      <StatRow stat={stats.def} classes="odd" selected={selectedDef} onSelect={(def: number) => selectDef(def)} />
+      <StatRow stat={stats.spd} classes="even" selected={selectedSpd} onSelect={(spd: number) => selectSpd(spd)} />
+      <StatRow stat={stats.criRate} classes="odd" selected={selectedCriRate} onSelect={(criRate: number) => selectCriRate(criRate)} />
+      <StatRow stat={stats.criDmg} classes="even" selected={selectedCriDmg} onSelect={(criDmg: number) => selectCriDmg(criDmg)} />
+      <StatRow stat={stats.acc} classes="odd" selected={selectedAcc} onSelect={(acc: number) => selectAcc(acc)} />
     </div>
   );
 }
