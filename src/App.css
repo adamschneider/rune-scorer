@@ -59,7 +59,7 @@
 }
 
 .btn.selected {
-  background-color: lightgreen;
+  background-color: slategray;
   color: black;
   font-weight: bold;
 }
@@ -69,7 +69,9 @@
 }
 
 .btn:hover {
-  background-color: slategray;
+  background-color: lightgreen;
+  color: black;
+  font-weight: bold;
 }
 
 span {
