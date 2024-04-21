@@ -51,9 +51,7 @@ function StatRow({ stat, selected, onSelect, classes }: { stat: Stat, selected: 
   rolls.forEach((_, r) => elements.push(<span className={r === selected ? `${classes} btn selected` : `btn ${classes}`} onClick={() => onSelect(r)}>{r}</span>));
 
   let spaces: JSX.Element[] = [];
-  if (rolls.size < numberOfColumns) {
-    spaces.push(<span className={`${classes} filler`}></span>);
-  }
+  spaces.push(<span className={`${classes} filler`}></span>);
 
   return (
     <div className="stat-row">
