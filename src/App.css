@@ -17,7 +17,7 @@ html, body {
 
   gap: 1px;
 
-  font-size: 2em;
+  font-size: 1.0em;
 }
 
 .score-row {
@@ -59,7 +59,7 @@ html, body {
 }
 
 .stat-row span.label {
-  flex: 0 1 10%;
+  flex: 0 1 13%;
 }
 
 .label {
@@ -67,7 +67,7 @@ html, body {
 }
 
 .stat-row span {
-  flex: 0 1 2.8%;
+  flex: 0 1 2.7%;
 }
 
 .stat-row span.filler {
