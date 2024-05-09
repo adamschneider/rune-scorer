@@ -1,8 +1,23 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+}
+
 .main {
+  height: 100%;
+
   display: flex;
   flex-direction: column;
+  justify-content: center;
+
   gap: 1px;
-  font-size: 0.8em;
+
+  font-size: 2em;
 }
 
 .score-row {
@@ -22,7 +37,7 @@
 }
 
 .rune-type-row {
-  flex: 1 0 auto;
+  flex: 0 1 auto;
 
   display: flex;
   gap: 1px;
@@ -33,7 +48,7 @@
 }
 
 .rune-type-row span {
-  flex: 1 0 auto;
+  flex: 1 0 8%;
 }
 
 .stat-row {
@@ -44,7 +59,7 @@
 }
 
 .stat-row span.label {
-  flex: 0 1 7%;
+  flex: 0 1 10%;
 }
 
 .label {
@@ -52,7 +67,7 @@
 }
 
 .stat-row span {
-  flex: 0 1 3%;
+  flex: 0 1 2.8%;
 }
 
 .stat-row span.filler {
