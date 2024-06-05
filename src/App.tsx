@@ -18,9 +18,6 @@ import './App.css';
   |     6 |    Accuracy %   |         4 |         8 |
   +-------+-----------------+-----------+-----------+
 */
-
-const numberOfColumns = 30;
-
 class Stat {
   constructor(
     public name: string,
@@ -44,7 +41,17 @@ function StatRow({ stat, selected, onSelect, classes }: { stat: Stat, selected: 
   }
 
   let rolls = new Set<number>();
-  singleRoll.map(h => singleRoll.map(i => singleRoll.map(j => singleRoll.map(k => rolls.add(h + i + j + k)))));
+  singleRoll.map(
+    h => singleRoll.map(
+      i => singleRoll.map(
+        j => singleRoll.map(
+          k => singleRoll.map(
+            l => rolls.add(h + i + j + k + l)
+          )
+        )
+      )
+    )
+  );
 
 
   let elements: JSX.Element[] = [];
@@ -54,7 +61,7 @@ function StatRow({ stat, selected, onSelect, classes }: { stat: Stat, selected: 
   spaces.push(<span className={`${classes} filler`}></span>);
 
   return (
-    <div className="stat-row">
+    <div className="row stat-row">
       <span className={`label ${classes}`}>{stat.name}</span>
       {elements}
       {spaces}
@@ -108,15 +115,6 @@ function App() {
     <div className="main">
       <div className="score-row">
         <span>Score</span><span className="score">{score}</span><span className="btn" onClick={clear}>Clear</span>
-      </div>
-      <div className="rune-type-row">
-        <span className="label">Rune Type</span>
-        <span className={selectedRune === undefined ? 'rune-type btn selected' : 'rune-type btn'} onClick={() => { selectRune(undefined); }}>Flat</span>
-        {
-          Object.values(stats).map(stat =>
-            <RuneType stat={stat} selected={selectedRune === stat} onClick={() => selectRune(stat)} />
-          )
-        }
       </div>
 
       <StatRow stat={stats.hp} classes="odd" selected={selectedHp} onSelect={(hp: number) => selectHp(hp)} />

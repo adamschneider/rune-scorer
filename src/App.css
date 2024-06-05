@@ -18,6 +18,19 @@ html, body {
   gap: 1px;
 
   font-size: 1.0em;
+  user-select: none;
+  font-weight: 600;
+}
+
+.row {
+  height: 34px;
+}
+
+.score-row span,
+.row span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .score-row {
@@ -59,7 +72,7 @@ html, body {
 }
 
 .stat-row span.label {
-  flex: 0 1 13%;
+  flex: 0 1 10%;
 }
 
 .label {
@@ -67,7 +80,7 @@ html, body {
 }
 
 .stat-row span {
-  flex: 0 1 2.7%;
+  flex: 0 1 2.26%;
 }
 
 .stat-row span.filler {
@@ -75,7 +88,7 @@ html, body {
 }
 
 .btn.selected {
-  background-color: slategray;
+  background-color: rgb(147, 166, 185);
   color: black;
   font-weight: bold;
 }
