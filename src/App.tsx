@@ -15,6 +15,7 @@ function StatRow({ stat, value, onChange, classes }: { stat: Stat, value: number
   return (
     <div className={`row stat-row ${classes}`}>
       <span className="label">{stat.name}</span>
+      <span className="value">{value}</span>
       <input className="slider" type="range" min={stat.minimum} max={stat.maximum} value={value} onChange={(e) => onChange(Number(e.target.value))} />
     </div>
   )
