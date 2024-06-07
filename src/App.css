@@ -49,30 +49,12 @@ html, body {
   flex: 1 0 auto;
 }
 
-.rune-type-row {
-  flex: 0 1 auto;
-
-  display: flex;
-  gap: 1px;
-}
-
-.rune-type {
-  flex: 0 1 auto;
-}
-
-.rune-type-row span {
-  flex: 1 0 8%;
-}
-
 .stat-row {
   flex: 0 1 auto;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% auto;
   gap: 1px;
-}
-
-.stat-row span.label {
-  flex: 0 1 10%;
 }
 
 .label {
@@ -83,30 +65,43 @@ html, body {
   flex: 0 1 2.26%;
 }
 
-.stat-row span.filler {
-  flex: 1 0 auto;
-}
-
-.btn.selected {
-  background-color: rgb(147, 166, 185);
-  color: black;
-  font-weight: bold;
-}
-
-.btn {
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: lightgreen;
-  color: black;
-  font-weight: bold;
-}
-
 span {
   text-align: center;
 }
 
 .odd {
   background-color: darkslategray;
+}
+
+.slider {
+  flex: 1 0 90%;
+
+  appearance: none;
+  border-radius: 5px;  
+  background: none;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.odd .slider {
+  background: darkslategray;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: rgb(147, 166, 185);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgb(147, 166, 185);
+  cursor: pointer;
 }

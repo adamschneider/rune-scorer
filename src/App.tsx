@@ -1,23 +1,6 @@
 import { useState } from 'react';
 import './App.css';
 
-/*
-  +-------+-----------------+-----------+-----------+
-  | Stars	|         Substat	| Min Value | Max Value |
-  +-------+-----------------+-----------+-----------+
-  |     6 |    HP           |       135 |       375 |
-  |     6 |    HP %         |         5 |         8 |
-  |     6 |    ATK          |        10 |        20 |
-  |     6 |    ATK %        |         5 |         8 |
-  |     6 |    DEF          |        10	|        20 |
-  |     6 |    DEF %        |         5 |         8 |
-  |     6 |    SPD          |         4 |         6 |
-  |     6 |    CRI Rate %   |         4 |         6 |
-  |     6 |    CRI Dmg %    |         4 |         7 |
-  |     6 |    Resistance % |         4 |         8 |
-  |     6 |    Accuracy %   |         4 |         8 |
-  +-------+-----------------+-----------+-----------+
-*/
 class Stat {
   constructor(
     public name: string,
@@ -28,60 +11,26 @@ class Stat {
   ) { }
 }
 
-function RuneType({ stat, selected, onClick }: { stat: Stat, selected: boolean, onClick: () => void }) {
-  let className = selected ? 'rune-type btn selected' : 'rune-type btn';
-  return <span className={className} onClick={onClick}>{stat.name}</span>;
-}
-
-function StatRow({ stat, selected, onSelect, classes }: { stat: Stat, selected: number, onSelect: (value: number) => void, classes: string }) {
-
-  let singleRoll: number[] = [0];
-  for (let i = stat.minimum; i <= stat.maximum; i++) {
-    singleRoll.push(i);
-  }
-
-  let rolls = new Set<number>();
-  singleRoll.map(
-    h => singleRoll.map(
-      i => singleRoll.map(
-        j => singleRoll.map(
-          k => singleRoll.map(
-            l => rolls.add(h + i + j + k + l)
-          )
-        )
-      )
-    )
-  );
-
-
-  let elements: JSX.Element[] = [];
-  rolls.forEach((_, r) => elements.push(<span className={r === selected ? `${classes} btn selected` : `btn ${classes}`} onClick={() => onSelect(r)}>{r}</span>));
-
-  let spaces: JSX.Element[] = [];
-  spaces.push(<span className={`${classes} filler`}></span>);
-
+function StatRow({ stat, value, onChange, classes }: { stat: Stat, value: number, onChange: (value: number) => void, classes: string }) {
   return (
-    <div className="row stat-row">
-      <span className={`label ${classes}`}>{stat.name}</span>
-      {elements}
-      {spaces}
+    <div className={`row stat-row ${classes}`}>
+      <span className="label">{stat.name}</span>
+      <input className="slider" type="range" min={stat.minimum} max={stat.maximum} value={value} onChange={(e) => onChange(Number(e.target.value))} />
     </div>
   )
 }
 
 const stats = {
-  hp: new Stat("HP %", 5, 8, 1, 63),
-  atk: new Stat("ATK %", 5, 8, 1, 63),
-  def: new Stat("DEF  %", 5, 8, 1, 63),
-  spd: new Stat("SPD", 4, 6, 2, 42),
-  criRate: new Stat("CRI Rate %", 4, 6, 1.5, 58),
-  criDmg: new Stat("CRI Dmg %", 4, 7, 1, 80),
-  acc: new Stat("Acc %", 4, 8, 1, 64)
+  hp: new Stat("HP %", 0, 50, 1, 63),
+  atk: new Stat("ATK %", 0, 50, 1, 63),
+  def: new Stat("DEF  %", 0, 50, 1, 63),
+  spd: new Stat("SPD", 0, 35, 2, 42),
+  criRate: new Stat("CRI Rate %", 0, 30, 1.5, 58),
+  criDmg: new Stat("CRI Dmg %", 0, 35, 1, 80),
+  acc: new Stat("Acc %", 0, 40, 1, 64)
 };
 
 function App() {
-  const [selectedRune, selectRune] = useState<Stat | undefined>();
-
   const [selectedHp, selectHp] = useState(0);
   const [selectedAtk, selectAtk] = useState(0);
   const [selectedDef, selectDef] = useState(0);
@@ -91,7 +40,6 @@ function App() {
   const [selectedAcc, selectAcc] = useState(0);
 
   const score = Math.ceil(
-    (selectedRune ? selectedRune.main * selectedRune.weight : 0) +
     selectedHp * stats.hp.weight +
     selectedAtk * stats.atk.weight +
     selectedDef * stats.def.weight +
@@ -117,13 +65,13 @@ function App() {
         <span>Score</span><span className="score">{score}</span><span className="btn" onClick={clear}>Clear</span>
       </div>
 
-      <StatRow stat={stats.hp} classes="odd" selected={selectedHp} onSelect={(hp: number) => selectHp(hp)} />
-      <StatRow stat={stats.atk} classes="even" selected={selectedAtk} onSelect={(atk: number) => selectAtk(atk)} />
-      <StatRow stat={stats.def} classes="odd" selected={selectedDef} onSelect={(def: number) => selectDef(def)} />
-      <StatRow stat={stats.spd} classes="even" selected={selectedSpd} onSelect={(spd: number) => selectSpd(spd)} />
-      <StatRow stat={stats.criRate} classes="odd" selected={selectedCriRate} onSelect={(criRate: number) => selectCriRate(criRate)} />
-      <StatRow stat={stats.criDmg} classes="even" selected={selectedCriDmg} onSelect={(criDmg: number) => selectCriDmg(criDmg)} />
-      <StatRow stat={stats.acc} classes="odd" selected={selectedAcc} onSelect={(acc: number) => selectAcc(acc)} />
+      <StatRow stat={stats.hp} classes="odd" value={selectedHp} onChange={(hp: number) => selectHp(hp)} />
+      <StatRow stat={stats.atk} classes="even" value={selectedAtk} onChange={(atk: number) => selectAtk(atk)} />
+      <StatRow stat={stats.def} classes="odd" value={selectedDef} onChange={(def: number) => selectDef(def)} />
+      <StatRow stat={stats.spd} classes="even" value={selectedSpd} onChange={(spd: number) => selectSpd(spd)} />
+      <StatRow stat={stats.criRate} classes="odd" value={selectedCriRate} onChange={(criRate: number) => selectCriRate(criRate)} />
+      <StatRow stat={stats.criDmg} classes="even" value={selectedCriDmg} onChange={(criDmg: number) => selectCriDmg(criDmg)} />
+      <StatRow stat={stats.acc} classes="odd" value={selectedAcc} onChange={(acc: number) => selectAcc(acc)} />
     </div>
   );
 }
