@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 
-const router = createBrowserRouter([{
+const router = createHashRouter([{
   path: "/sliders",
   element: <App mode="sliders" />
 }, {
@@ -13,7 +13,7 @@ const router = createBrowserRouter([{
   element: <App mode="buttons" />
 }, {
   path: "/",
-  element: <App mode="buttons" />
+  element: <App mode="sliders" />
 }])
 
 const root = ReactDOM.createRoot(
