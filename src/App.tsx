@@ -1,80 +1,117 @@
 import { useState } from 'react';
+
 import './App.css';
 
 class Stat {
-  constructor(
-    public name: string,
-    public minimum: number,
-    public maximum: number,
-    public weight: number,
-    public main: number,
-  ) { }
+    constructor(
+        public name: string,
+        public range_minimum: number,
+        public range_maximum: number,
+        public maximum: number,
+        public weight: number,
+    ) { }
 }
 
-function StatRow({ stat, value, onChange, classes }: { stat: Stat, value: number, onChange: (value: number) => void, classes: string }) {
-  return (
-    <div className={`row stat-row ${classes}`}>
-      <span className="label">{stat.name}</span>
-      <span className="value">{value}</span>
-      <input className="slider" type="range" min={stat.minimum} max={stat.maximum} value={value} onChange={(e) => onChange(Number(e.target.value))} />
-    </div>
-  )
-}
-
-const stats = {
-  hp: new Stat("HP %", 0, 50, 1, 63),
-  atk: new Stat("ATK %", 0, 50, 1, 63),
-  def: new Stat("DEF  %", 0, 50, 1, 63),
-  spd: new Stat("SPD", 0, 35, 2, 42),
-  criRate: new Stat("CRI Rate %", 0, 30, 1.5, 58),
-  criDmg: new Stat("CRI Dmg %", 0, 35, 1, 80),
-  acc: new Stat("Acc %", 0, 40, 1, 64)
+const Stats = {
+    hp: new Stat("HP %", 5, 8, 50, 1),
+    atk: new Stat("ATK %", 5, 8, 50, 1),
+    def: new Stat("DEF  %", 5, 8, 50, 1),
+    spd: new Stat("SPD", 4, 6, 35, 2),
+    criRate: new Stat("CRI Rate %", 4, 6, 30, 1.5),
+    criDmg: new Stat("CRI Dmg %", 4, 7, 35, 1),
+    acc: new Stat("Acc %", 4, 8, 40, 1)
 };
 
-function App() {
-  const [selectedHp, selectHp] = useState(0);
-  const [selectedAtk, selectAtk] = useState(0);
-  const [selectedDef, selectDef] = useState(0);
-  const [selectedSpd, selectSpd] = useState(0);
-  const [selectedCriRate, selectCriRate] = useState(0);
-  const [selectedCriDmg, selectCriDmg] = useState(0);
-  const [selectedAcc, selectAcc] = useState(0);
+function ButtonRow({ stat, value, onChange, classes }: { stat: Stat, value: number, onChange: (value: number) => void, classes: string }) {
 
-  const score = Math.ceil(
-    selectedHp * stats.hp.weight +
-    selectedAtk * stats.atk.weight +
-    selectedDef * stats.def.weight +
-    selectedSpd * stats.spd.weight +
-    selectedCriRate * stats.criRate.weight +
-    selectedCriDmg * stats.criDmg.weight +
-    selectedAcc * stats.acc.weight
-  );
+    let button = function (v: number) {
+        let selected = value == v ? "selected" : "";
+        return <span className={`btn ${selected}`} onClick={() => onChange(v)}>{v}</span>;
+    }
 
-  const clear = () => {
-    selectHp(0);
-    selectAtk(0);
-    selectDef(0);
-    selectSpd(0);
-    selectCriRate(0);
-    selectCriDmg(0);
-    selectAcc(0);
-  }
+    let buttons = [button(0)];
 
-  return (
-    <div className="main">
-      <div className="score-row">
-        <span>Score</span><span className="score">{score}</span><span className="btn" onClick={clear}>Clear</span>
-      </div>
+    for (let i = stat.range_minimum; i <= stat.maximum; i++) {
+        buttons.push(button(i))
+    }
 
-      <StatRow stat={stats.hp} classes="odd" value={selectedHp} onChange={(hp: number) => selectHp(hp)} />
-      <StatRow stat={stats.atk} classes="even" value={selectedAtk} onChange={(atk: number) => selectAtk(atk)} />
-      <StatRow stat={stats.def} classes="odd" value={selectedDef} onChange={(def: number) => selectDef(def)} />
-      <StatRow stat={stats.spd} classes="even" value={selectedSpd} onChange={(spd: number) => selectSpd(spd)} />
-      <StatRow stat={stats.criRate} classes="odd" value={selectedCriRate} onChange={(criRate: number) => selectCriRate(criRate)} />
-      <StatRow stat={stats.criDmg} classes="even" value={selectedCriDmg} onChange={(criDmg: number) => selectCriDmg(criDmg)} />
-      <StatRow stat={stats.acc} classes="odd" value={selectedAcc} onChange={(acc: number) => selectAcc(acc)} />
-    </div>
-  );
+    return (
+        <div className={`button row stat-row ${classes}`}>
+            <span className="label">{stat.name}</span>
+            {buttons}
+        </div>
+    )
 }
 
-export default App;
+function SliderRow({ stat, value, onChange, classes }: { stat: Stat, value: number, onChange: (value: number) => void, classes: string }) {
+    return (
+        <div className={`slider row stat-row ${classes}`}>
+            <span className="label">{stat.name}</span>
+            <span className="value">{value}</span>
+            <input className="slider" type="range" min={0} max={stat.maximum} value={value} onChange={(e) => onChange(Number(e.target.value))} />
+        </div>
+    )
+}
+
+export default function App({ mode }: { mode: string }) {
+
+
+    const [selectedHp, selectHp] = useState(0);
+    const [selectedAtk, selectAtk] = useState(0);
+    const [selectedDef, selectDef] = useState(0);
+    const [selectedSpd, selectSpd] = useState(0);
+    const [selectedCriRate, selectCriRate] = useState(0);
+    const [selectedCriDmg, selectCriDmg] = useState(0);
+    const [selectedAcc, selectAcc] = useState(0);
+
+    const score = Math.ceil(
+        selectedHp * Stats.hp.weight +
+        selectedAtk * Stats.atk.weight +
+        selectedDef * Stats.def.weight +
+        selectedSpd * Stats.spd.weight +
+        selectedCriRate * Stats.criRate.weight +
+        selectedCriDmg * Stats.criDmg.weight +
+        selectedAcc * Stats.acc.weight
+    );
+
+    const reset = () => {
+        selectHp(0);
+        selectAtk(0);
+        selectDef(0);
+        selectSpd(0);
+        selectCriRate(0);
+        selectCriDmg(0);
+        selectAcc(0);
+    }
+
+    let buttons = <>
+        <ButtonRow stat={Stats.hp} classes="odd" value={selectedHp} onChange={(hp: number) => selectHp(hp)} />
+        <ButtonRow stat={Stats.atk} classes="even" value={selectedAtk} onChange={(atk: number) => selectAtk(atk)} />
+        <ButtonRow stat={Stats.def} classes="odd" value={selectedDef} onChange={(def: number) => selectDef(def)} />
+        <ButtonRow stat={Stats.spd} classes="even" value={selectedSpd} onChange={(spd: number) => selectSpd(spd)} />
+        <ButtonRow stat={Stats.criRate} classes="odd" value={selectedCriRate} onChange={(criRate: number) => selectCriRate(criRate)} />
+        <ButtonRow stat={Stats.criDmg} classes="even" value={selectedCriDmg} onChange={(criDmg: number) => selectCriDmg(criDmg)} />
+        <ButtonRow stat={Stats.acc} classes="odd" value={selectedAcc} onChange={(acc: number) => selectAcc(acc)} />
+    </>;
+
+    let sliders = <>
+        <SliderRow stat={Stats.hp} classes="odd" value={selectedHp} onChange={(hp: number) => selectHp(hp)} />
+        <SliderRow stat={Stats.atk} classes="even" value={selectedAtk} onChange={(atk: number) => selectAtk(atk)} />
+        <SliderRow stat={Stats.def} classes="odd" value={selectedDef} onChange={(def: number) => selectDef(def)} />
+        <SliderRow stat={Stats.spd} classes="even" value={selectedSpd} onChange={(spd: number) => selectSpd(spd)} />
+        <SliderRow stat={Stats.criRate} classes="odd" value={selectedCriRate} onChange={(criRate: number) => selectCriRate(criRate)} />
+        <SliderRow stat={Stats.criDmg} classes="even" value={selectedCriDmg} onChange={(criDmg: number) => selectCriDmg(criDmg)} />
+        <SliderRow stat={Stats.acc} classes="odd" value={selectedAcc} onChange={(acc: number) => selectAcc(acc)} />
+    </>;
+
+    return (
+        <div className="main">
+            <div className="score-row">
+                <span>Score</span><span className="score">{score}</span><span className="btn" onClick={reset}>Reset</span>
+            </div>
+
+            {(mode == "buttons") ? buttons : sliders}
+        </div>
+    )
+
+}

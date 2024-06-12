@@ -22,8 +22,13 @@ html, body {
   font-weight: 600;
 }
 
-.row {
+.slider.row {
   height: 34px;
+}
+
+.button.row {
+  padding: 0px 5px;
+  height: 28px;
 }
 
 .score-row span,
@@ -49,11 +54,42 @@ html, body {
   flex: 1 0 auto;
 }
 
-.stat-row {
+.btn {
+  border-radius: 2px;
+  height: 100%
+}
+
+.btn:hover {
+  color: black;
+  background-color: rgb(200, 200, 0);
+  cursor: pointer;
+}
+
+.btn.selected {
+  color: black;
+  background-color: rgb(0, 200, 0)
+}
+
+.slider.stat-row {
   display: grid;
   align-items: center;
   grid-template-columns: 10% 4% auto 1%;
   gap: 1px;
+}
+
+.slider.stat-row .value {
+  font-weight: bold;
+}
+
+.button.stat-row {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 10% repeat(47, 1fr);
+  gap: 1px;
+}
+
+.button.stat-row .value {
+  font-weight: bold;
 }
 
 .label {
@@ -64,7 +100,7 @@ span {
   text-align: center;
 }
 
-.odd {
+.row.odd {
   background-color: darkslategray;
 }
 
@@ -74,8 +110,6 @@ span {
   background: rgba(255, 255, 255, 0.1);
   height: 50%;
   outline: none;
-  opacity: 0.7;
-  transition: opacity .2s;
 }
 
 .odd .slider {
@@ -98,4 +132,8 @@ span {
   border-radius: 50%;
   background: rgb(147, 166, 185);
   cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background: rgb(200, 200, 0);
 }
