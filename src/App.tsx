@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 
 class Stat {
     constructor(
@@ -55,7 +56,6 @@ function SliderRow({ stat, value, onChange, classes }: { stat: Stat, value: numb
 
 export default function App({ mode }: { mode: string }) {
 
-
     const [selectedHp, selectHp] = useState(0);
     const [selectedAtk, selectAtk] = useState(0);
     const [selectedDef, selectDef] = useState(0);
@@ -104,14 +104,23 @@ export default function App({ mode }: { mode: string }) {
         <SliderRow stat={Stats.acc} classes="odd" value={selectedAcc} onChange={(acc: number) => selectAcc(acc)} />
     </>;
 
+    const navigate = useNavigate();
+
     return (
         <div className="main">
-            <div className="score-row">
-                <span>Score</span><span className="score">{score}</span><span className="btn" onClick={reset}>Reset</span>
+            <div className="menu">
+                <span className={"btn " + (mode == "sliders" ? "selected" : "")} onClick={() => navigate("/sliders")}>Sliders</span>
+                <span className={"btn " + (mode == "buttons" ? "selected" : "")} onClick={() => navigate("/buttons")}>Buttons</span>
             </div>
 
-            {(mode == "buttons") ? buttons : sliders}
-        </div>
+            <div className="scorer">
+                <div className="score-row">
+                    <span>Score</span><span className="score">{score}</span><span className="btn" onClick={reset}>Reset</span>
+                </div>
+
+                {mode == "buttons" ? buttons : sliders}
+            </div>
+        </div >
     )
 
 }

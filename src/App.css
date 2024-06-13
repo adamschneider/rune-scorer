@@ -22,6 +22,32 @@ html, body {
   font-weight: 600;
 }
 
+.menu {
+  flex: 0 1 auto;
+
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 5px;
+  margin: 10px;
+}
+
+.menu > * {
+  flex: 0 1 auto;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  font-size: 0.5em;
+}
+
+.scorer {
+  flex: 1 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .slider.row {
   height: 34px;
 }
