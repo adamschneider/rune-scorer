@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/rune-scorer/static/css/main.d56a73a7.css",
+    "main.css": "/rune-scorer/static/css/main.756e6d19.css",
     "main.js": "/rune-scorer/static/js/main.471efeb9.js",
     "static/js/453.6082b960.chunk.js": "/rune-scorer/static/js/453.6082b960.chunk.js",
     "index.html": "/rune-scorer/index.html",
-    "main.d56a73a7.css.map": "/rune-scorer/static/css/main.d56a73a7.css.map",
+    "main.756e6d19.css.map": "/rune-scorer/static/css/main.756e6d19.css.map",
     "main.471efeb9.js.map": "/rune-scorer/static/js/main.471efeb9.js.map",
     "453.6082b960.chunk.js.map": "/rune-scorer/static/js/453.6082b960.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d56a73a7.css",
+    "static/css/main.756e6d19.css",
     "static/js/main.471efeb9.js"
   ]
 }
