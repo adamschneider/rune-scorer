@@ -108,6 +108,7 @@ html, body {
 }
 
 .button.stat-row {
+  font-size: .75em;
   display: grid;
   align-items: center;
   grid-template-columns: 10% repeat(47, 1fr);
